@@ -84,9 +84,9 @@ def test_cnn(model, testloader):
             prediction = output.data.cpu().numpy()
 
             #normalize
-            prediction[prediction < 0] = 0
-            result = (model.Softmax(dim=1))(prediction)
-            
+            max_val = max(prediction)
+            result = [1 if x == max_val else 0 for x in prediction]
+
             #update stats
             preds = np.append(preds, result)
             truth = np.append(truth, one_hot_word)
